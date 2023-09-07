@@ -1,0 +1,117 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Diario Nutricional API",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5002/api"
+    }
+  ],
+  "components": {
+    "requestBodies": {
+      "CrearUsuario": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/components/schemas/user"
+              }
+            }
+          }
+        },
+        "description": "List of user object"
+      },
+      "CrearComida": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/comida"
+            }
+          }
+        },
+        "description": "Comida para añadir"
+      }
+    },
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "peso": {
+            "type": "number"
+          },
+          "altura": {
+            "type": "integer"
+          },
+          "nickname": {
+            "type": "string"
+          }
+        }
+      },
+      "comida": {
+        "type": "object",
+        "properties": {
+          "platos": {
+            "type": "array",
+            "properties": {
+              "descripcion": {
+                "type": "string"
+              },
+              "calorias": {
+                "type": "integer"
+              }
+            }
+          },
+          "user": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/user": {
+      "post": {
+        "description": "Crear un usuario",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CrearUsuario"
+        },
+        "responses": {
+          "200": {
+            "description": "Usuario creado correctamente"
+          },
+          "400": {
+            "description": "Datos de entrada incompletos"
+          },
+          "500": {
+            "description": "Error al crear el usuario"
+          }
+        }
+      }
+    },
+    "/comida/<tipo>": {
+      "post": {
+        "description": "Añadir comida",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CrearComida"
+        },
+        "responses": {
+          "200": {
+            "description": "Comida añadida correctamente"
+          },
+          "400": {
+            "description": "Datos de entrada incompletos"
+          },
+          "500": {
+            "description": "Error al crear la comida"
+          }
+        }
+      }
+    }
+  }
+}
